@@ -1,0 +1,10 @@
+{
+	"makefile.makefilePath": "/home/sunghyki/Downloads/cub",
+	"makefile.launchConfigurations": [
+		{
+			"cwd": "/home/sunghyki/Downloads/cub",
+			"binaryPath": "/home/sunghyki/Downloads/cub/cub3d",
+			"binaryArgs": []
+		}
+	]
+}
