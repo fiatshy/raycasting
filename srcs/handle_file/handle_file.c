@@ -221,9 +221,9 @@ int	handle_map(int fd, t_info *ti)
 	ft_memset(temp_map, -1, sizeof(int) * 100 * 100);
 	if (make_temp_map(fd, temp_map) == -1)
 		return (-1);
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 99; i++)
 	{
-		for (int j = 0; j < 100; j++)
+		for (int j = 0; j < 99; j++)
 		{
 			printf("%d", temp_map[i][j]);
 		}
