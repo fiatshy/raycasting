@@ -41,10 +41,10 @@ int	handle_map_value(char *temp, int i, int temp_map[100][100])
 		else if (check_if_map_direction(*(temp + j)))
 			*(temp + j) -= 'A';
 		else if ((9 <= *(temp + j) && *(temp + j) <= 13) || *(temp + j) == 32)
-			*(temp + j) = 0;
+			*(temp + j) = -1;
 		else
 			return (-1);
-		temp_map[i][j] = *(temp + j);
+		temp_map[i + 1][j + 1] = *(temp + j);
 		j++;
 	}
 	return (0);
@@ -218,9 +218,17 @@ int	handle_map(int fd, t_info *ti)
 	int		temp_map[100][100];
 
 	(void) ti;
-	ft_memset(temp_map, 0, sizeof(int) * 100 * 100);
+	ft_memset(temp_map, -1, sizeof(int) * 100 * 100);
 	if (make_temp_map(fd, temp_map) == -1)
 		return (-1);
+	for (int i = 0; i < 100; i++)
+	{
+		for (int j = 0; j < 100; j++)
+		{
+			printf("%d", temp_map[i][j]);
+		}
+		printf("\n");
+	}
 	if (check_map_error(ti, temp_map) == -1)
 		return (-1);
 	return (0);
