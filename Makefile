@@ -23,6 +23,9 @@ SRCS_HANDLE_MAP = handle_map/check_map_error.c \
 					handle_map/handle_temp_map.c \
 					handle_map/make_map.c \
 
+SRCS_HANDLE_TEXTURE = handle_texture/init_texture.c \
+						handle_texture/init_config.c \
+
 SRCS_INIT = init/init.c \
 
 SRCS_UTIL = util/util_file_handle.c \
@@ -32,6 +35,7 @@ SRCS_LIST = $(SRCS_FILE) \
 			$(SRCS_GNL) \
 			$(SRCS_HANDLE_FILE) \
 			$(SRCS_HANDLE_MAP) \
+			$(SRCS_HANDLE_TEXTURE) \
 			$(SRCS_INIT) \
 			$(SRCS_UTIL) \
 
@@ -42,6 +46,7 @@ OBJS_LIST = $(patsubst %.c, %.o, $(SRCS_LIST))
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_LIST))
 
 LIBFT_PATH = ./srcs/libft/
+LIBMLX_PATH = ./srcs/libmlx/
 
 .PHONY: all clean fclean re bonus
 
@@ -49,7 +54,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	@ make -C $(LIBFT_PATH)
-	@ $(CC) $(FLAGS) $(H) $^ -D BONUS=$(FLAG_BONUS) -o $@ $(LIBFT_PATH)libft.a -lreadline
+	@ $(CC) $(FLAGS) $(H) $^ -D BONUS=$(FLAG_BONUS) -o $@ $(LIBFT_PATH)libft.a $(LIBMLX_PATH)libmlx.a $(LIBMLX_PATH)libmlx_Linux.a -lX11 -lXext -lm
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)%.c
 	@ mkdir -p $(dir $@)

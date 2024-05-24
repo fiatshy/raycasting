@@ -30,6 +30,20 @@ void	free_all(t_info *ti)
 	free(ti->td->fc[1]);
 	free(ti->td->fc);
 	free(ti->tc);
+	free(ti->tx->tex->wall_ptr[0]);
+	free(ti->tx->tex->wall_ptr[1]);
+	free(ti->tx->tex->wall_ptr[2]);
+	free(ti->tx->tex->wall_ptr[3]);
+	free(ti->tx->tex->texture_ptr[0]);
+	free(ti->tx->tex->texture_ptr[1]);
+	free(ti->tx->tex->texture_ptr[2]);
+	free(ti->tx->tex->texture_ptr[3]);
+	free(ti->tx->tex->texture_ptr[4]);
+	free(ti->tx->tex->texture_ptr[5]);
+	free(ti->tx->tex->wall_ptr);
+	free(ti->tx->tex);
+	free(ti->tx);
+
 	i = 0;
 	while (i < ti->arr_height)
 	{
@@ -52,5 +66,6 @@ int	main(int ac, char **av)
 	ti.td = &td;
 	if (check_file(mapfile, &td, &ti) == -1)
 		return (0);
+	init_raycasting(&ti);
 	free_all(&ti);
 }

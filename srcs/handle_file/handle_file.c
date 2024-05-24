@@ -57,7 +57,7 @@ int	check_cols(int temp_map[100][100], t_info *ti)
 				cur_cols = j;
 			j++;
 		}
-		if (cur_cols > max_cols)
+		if (cur_cols >= max_cols)
 			max_cols = cur_cols;
 		i++;
 	}

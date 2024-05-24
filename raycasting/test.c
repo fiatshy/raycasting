@@ -7,8 +7,8 @@
 #define screenHeight	480
 #define	texWidth		64
 #define	texHeight		64
-#define	mapWidth		8
-#define	mapHeight		8
+#define	mapWidth		5
+#define	mapHeight		5
 #define	miniWidth		120
 #define	miniHeight		120
 #define UP				119
@@ -274,6 +274,7 @@ void	render_frame(void *data)
 	for (int x = 0; x < w; x++)
 	{
 		double	cameraX = 2 * x / (double)w - 1;
+		printf("%f\n", cameraX);
 		double	rayDirX = tx->dir[0] + tx->plane[0] * cameraX;
 		double	rayDirY = tx->dir[1] + tx->plane[1] * cameraX;
 
@@ -329,7 +330,10 @@ void	render_frame(void *data)
 				side = 1;
 			}
 
-			if (tx->map[mapX][mapY] == 1) hit = 1;
+			if (tx->map[mapX][mapY] == 1)
+			{
+				hit = 1;
+			}
 		}
 		
 		if (side == 0) perpWallDist = (sideDistX - deltaDistX);
@@ -374,132 +378,132 @@ void	render_frame(void *data)
 		tx->ZBuffer[x] = perpWallDist;
 	}
 
-	for (int x = 0; x < w; x++)
-	{
-		double	cameraX = 2 * x / (double)w - 1;
-		double	rayDirX = tx->dir[0] + tx->plane[0] * cameraX;
-		double	rayDirY = tx->dir[1] + tx->plane[1] * cameraX;
+	//for (int x = 0; x < w; x++)
+	//{
+	//	double	cameraX = 2 * x / (double)w - 1;
+	//	double	rayDirX = tx->dir[0] + tx->plane[0] * cameraX;
+	//	double	rayDirY = tx->dir[1] + tx->plane[1] * cameraX;
 
-		int	mapX = (int)tx->pos_arr[0];
-		int	mapY = (int)tx->pos_arr[1];
+	//	int	mapX = (int)tx->pos_arr[0];
+	//	int	mapY = (int)tx->pos_arr[1];
 
-		double	sideDistX;
-		double	sideDistY;
+	//	double	sideDistX;
+	//	double	sideDistY;
 
-		double	deltaDistX = (rayDirX == 0) ? 1e30 : abs_double(1 / rayDirX);
-		double	deltaDistY = (rayDirY == 0) ? 1e30 : abs_double(1 / rayDirY);
-		double	perpWallDist;
+	//	double	deltaDistX = (rayDirX == 0) ? 1e30 : abs_double(1 / rayDirX);
+	//	double	deltaDistY = (rayDirY == 0) ? 1e30 : abs_double(1 / rayDirY);
+	//	double	perpWallDist;
 
-		int	stepX;
-		int	stepY;
+	//	int	stepX;
+	//	int	stepY;
 
-		int	hit = 0;
-		int	side;
+	//	int	hit = 0;
+	//	int	side;
 
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (tx->pos_arr[0] - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - tx->pos_arr[0]) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (tx->pos_arr[1] - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - tx->pos_arr[1]) * deltaDistY;
-		}
+	//	if (rayDirX < 0)
+	//	{
+	//		stepX = -1;
+	//		sideDistX = (tx->pos_arr[0] - mapX) * deltaDistX;
+	//	}
+	//	else
+	//	{
+	//		stepX = 1;
+	//		sideDistX = (mapX + 1.0 - tx->pos_arr[0]) * deltaDistX;
+	//	}
+	//	if (rayDirY < 0)
+	//	{
+	//		stepY = -1;
+	//		sideDistY = (tx->pos_arr[1] - mapY) * deltaDistY;
+	//	}
+	//	else
+	//	{
+	//		stepY = 1;
+	//		sideDistY = (mapY + 1.0 - tx->pos_arr[1]) * deltaDistY;
+	//	}
 
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
+	//	while (hit == 0)
+	//	{
+	//		if (sideDistX < sideDistY)
+	//		{
+	//			sideDistX += deltaDistX;
+	//			mapX += stepX;
+	//			side = 0;
+	//		}
+	//		else
+	//		{
+	//			sideDistY += deltaDistY;
+	//			mapY += stepY;
+	//			side = 1;
+	//		}
 
-			if (tx->map[mapX][mapY] >= 1) hit = 1;
-		}
+	//		if (tx->map[mapX][mapY] >= 1) hit = 1;
+	//	}
 		
-		if (side == 0) perpWallDist = (sideDistX - deltaDistX);
-		else			perpWallDist = (sideDistY - deltaDistY);
+	//	if (side == 0) perpWallDist = (sideDistX - deltaDistX);
+	//	else			perpWallDist = (sideDistY - deltaDistY);
 
-		if (tx->map[mapX][mapY] >= 2)
-		{
-			t_img	temp_img;
-			int	xpm_width;
-			int	xpm_height;
-			if (tx->map[mapX][mapY] > 2)
-				tx->count++;
-			if (tx->map[mapX][mapY] == 2)
-			{
-				void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door.xpm", &xpm_width, &xpm_height);
-				tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
-			}
-			else if (tx->map[mapX][mapY] == 3 && tx->count > 10000)
-			{
-				void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_a.xpm", &xpm_width, &xpm_height);
-				tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
-				tx->map[mapX][mapY] += 1;
-			}
-			else if (tx->map[mapX][mapY] == 4 && tx->count > 20000)
-			{
-				void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_b.xpm", &xpm_width, &xpm_height);
-				tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
-				tx->map[mapX][mapY] += 1;
-			}
-			else if (tx->map[mapX][mapY] == 5 && tx->count > 30000)
-			{
-				void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_c.xpm", &xpm_width, &xpm_height);
-				tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
-				tx->map[mapX][mapY] = 0;
-			}
-			int	h = screenHeight;
-			int	lineHeight = (int)(h / perpWallDist);
-			int	pitch = 0;
-			int drawStart = ((-1 * lineHeight)) / 2 + h / 2;
-			if(drawStart < 0) drawStart = 0;
-			int drawEnd = lineHeight / 2 + h / 2;
-			if(drawEnd >= h) drawEnd = h - 1;
+	//	if (tx->map[mapX][mapY] >= 2)
+	//	{
+	//		t_img	temp_img;
+	//		int	xpm_width;
+	//		int	xpm_height;
+	//		if (tx->map[mapX][mapY] > 2)
+	//			tx->count++;
+	//		if (tx->map[mapX][mapY] == 2)
+	//		{
+	//			void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door.xpm", &xpm_width, &xpm_height);
+	//			tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
+	//		}
+	//		else if (tx->map[mapX][mapY] == 3 && tx->count > 10000)
+	//		{
+	//			void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_a.xpm", &xpm_width, &xpm_height);
+	//			tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
+	//			tx->map[mapX][mapY] += 1;
+	//		}
+	//		else if (tx->map[mapX][mapY] == 4 && tx->count > 20000)
+	//		{
+	//			void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_b.xpm", &xpm_width, &xpm_height);
+	//			tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
+	//			tx->map[mapX][mapY] += 1;
+	//		}
+	//		else if (tx->map[mapX][mapY] == 5 && tx->count > 30000)
+	//		{
+	//			void	*img_ptr = mlx_xpm_file_to_image(tx->mlx, "door_c.xpm", &xpm_width, &xpm_height);
+	//			tx->door = (int *)mlx_get_data_addr(img_ptr, &temp_img.bits_per_pixel, &temp_img.line_length, &temp_img.endian);
+	//			tx->map[mapX][mapY] = 0;
+	//		}
+	//		int	h = screenHeight;
+	//		int	lineHeight = (int)(h / perpWallDist);
+	//		int	pitch = 0;
+	//		int drawStart = ((-1 * lineHeight)) / 2 + h / 2;
+	//		if(drawStart < 0) drawStart = 0;
+	//		int drawEnd = lineHeight / 2 + h / 2;
+	//		if(drawEnd >= h) drawEnd = h - 1;
 
-			double wallX; 
-			if(side == 0) wallX = tx->pos_arr[1] + perpWallDist * rayDirY;
-			else          wallX = tx->pos_arr[0] + perpWallDist * rayDirX;
-			wallX -= floor((wallX));
+	//		double wallX; 
+	//		if(side == 0) wallX = tx->pos_arr[1] + perpWallDist * rayDirY;
+	//		else          wallX = tx->pos_arr[0] + perpWallDist * rayDirX;
+	//		wallX -= floor((wallX));
 
-			int texX = (int)(wallX * (double)texWidth);
-			if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
-			if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
+	//		int texX = (int)(wallX * (double)texWidth);
+	//		if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
+	//		if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 
-			double step = 1.0 * texHeight / lineHeight;
-			double texPos = (drawStart - pitch - h / 2 + lineHeight / 2) * step;
-			for(int y = drawStart; y < drawEnd; y++)
-			{
-				int texY = (int)texPos & (texHeight - 1);
-				texPos += step;
-				int	color;
-				color = tx->door[texHeight * texY + texX];
-				if(side == 1) color = (color >> 1) & 8355711;
-				if (color != 0)
-					put_pixel(tx->img, x, y, color);
+	//		double step = 1.0 * texHeight / lineHeight;
+	//		double texPos = (drawStart - pitch - h / 2 + lineHeight / 2) * step;
+	//		for(int y = drawStart; y < drawEnd; y++)
+	//		{
+	//			int texY = (int)texPos & (texHeight - 1);
+	//			texPos += step;
+	//			int	color;
+	//			color = tx->door[texHeight * texY + texX];
+	//			if(side == 1) color = (color >> 1) & 8355711;
+	//			if (color != 0)
+	//				put_pixel(tx->img, x, y, color);
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 	//for (int i=0; i < numSprites; i++)
 	//{
@@ -601,14 +605,11 @@ int	main(void)
 
 	int worldMap[mapWidth][mapHeight]=
 	{
-		{1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,0,-1,1,2,1,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,1},
-		{1,1,0,0,0,0,1,1},
-		{1,1,1,1,1,1,1,1}
+		{1,1,1,1,1},
+		{1,1,0,1,1},
+		{1,1,0,1,1},
+		{1,0,0,0,1},
+		{1,1,1,1,1},
 	};
 
 	t_mlx	tx;
@@ -630,14 +631,14 @@ int	main(void)
 
 	tx.sprite = sprite;
 
-	tx.pos_arr[0] = 6;
-	tx.pos_arr[1] = 5;
+	tx.pos_arr[0] = 3.5;
+	tx.pos_arr[1] = 3.5;
 
-	tx.dir[0] = -1.0;
-	tx.dir[1] = 0.0;
+	tx.dir[0] = 0;
+	tx.dir[1] = -1;
 
-	tx.plane[0] = 0;
-	tx.plane[1] = 0.66;
+	tx.plane[0] = 0.66;
+	tx.plane[1] = 0;
 
 	tx.map = worldMap;
 
