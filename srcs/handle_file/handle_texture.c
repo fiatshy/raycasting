@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_texture.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sunghyki <sunghyki@student.42gyeongsa      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/24 10:20:26 by sunghyki          #+#    #+#             */
+/*   Updated: 2024/05/24 10:20:28 by sunghyki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 int	copy_texture_path(char *temp, int i, t_dir *td)
@@ -47,6 +59,7 @@ int	check_config_texture_name(int fd, t_dir *td)
 		free(temp);
 		temp = get_next_line(fd);
 	}
+	free(temp);
 	return (0);
 }
 

@@ -16,7 +16,11 @@ SRCS_GNL = gnl/get_next_line.c \
 
 SRCS_HANDLE_FILE = 	handle_file/handle_file.c \
 					handle_file/handle_floor_ceiling.c \
+					handle_file/handle_floor_ceiling_util.c \
 					handle_file/handle_texture.c \
+
+SRCS_HANDLE_MAP = handle_map/check_map_error.c \
+					handle_map/handle_temp_map.c \
 
 SRCS_INIT = init/init.c \
 
@@ -26,6 +30,7 @@ SRCS_UTIL = util/util_file_handle.c \
 SRCS_LIST = $(SRCS_FILE) \
 			$(SRCS_GNL) \
 			$(SRCS_HANDLE_FILE) \
+			$(SRCS_HANDLE_MAP) \
 			$(SRCS_INIT) \
 			$(SRCS_UTIL) \
 
