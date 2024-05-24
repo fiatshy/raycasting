@@ -14,6 +14,8 @@
 
 void	free_all(t_info *ti)
 {
+	int	i;
+
 	free(ti->td->dir[0]);
 	free(ti->td->dir[1]);
 	free(ti->td->dir[2]);
@@ -28,6 +30,13 @@ void	free_all(t_info *ti)
 	free(ti->td->fc[1]);
 	free(ti->td->fc);
 	free(ti->tc);
+	i = 0;
+	while (i < ti->arr_height)
+	{
+		free(ti->map[i]);
+		i++;
+	}
+	free(ti->map);
 }
 
 int	main(int ac, char **av)

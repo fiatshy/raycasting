@@ -66,11 +66,11 @@ int	handle_map(int fd, t_info *ti)
 {
 	int		temp_map[100][100];
 
-	(void) ti;
 	ft_memset(temp_map, -1, sizeof(int) * 100 * 100);
 	if (make_temp_map(fd, temp_map) == -1)
 		return (-1);
 	if (check_map_error(ti, temp_map) == -1)
 		return (-1);
+	make_map(temp_map, ti);
 	return (0);
 }

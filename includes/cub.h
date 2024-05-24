@@ -66,6 +66,10 @@ int		check_if_map_direction(char c);
 int		check_cub_extension(char *s);
 int		check_file(char	*mapfile, t_dir *td, t_info *ti);
 
+/* make_map */
+void	make_map(int temp_map[100][100], t_info *ti);
+void	init_map(int temp_map[100][100], t_info *ti);
+
 /* init */
 void	init_tdir(t_dir *td);
 

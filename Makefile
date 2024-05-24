@@ -21,6 +21,7 @@ SRCS_HANDLE_FILE = 	handle_file/handle_file.c \
 
 SRCS_HANDLE_MAP = handle_map/check_map_error.c \
 					handle_map/handle_temp_map.c \
+					handle_map/make_map.c \
 
 SRCS_INIT = init/init.c \
 
