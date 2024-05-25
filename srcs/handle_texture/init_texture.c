@@ -16,33 +16,10 @@ void	init_walls(t_info *ti)
 				ti->tx->mlx, trim_string, &xpm_width, &xpm_height);
 		free(trim_string);
 		ti->tx->tex->wall_addr[i] = (int *) mlx_get_data_addr(\
-				ti->tx->tex->wall_ptr[i], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
+				ti->tx->tex->wall_ptr[i], &temp.bits_per_pixel, \
+				&temp.line_length, &temp.endian);
 		i++;
 	}
-}
-
-void	init_doors(t_info *ti)
-{
-	int			xpm_width;
-	int			xpm_height;
-	t_img		temp;
-
-	ti->tx->tex->texture_ptr[2] = mlx_xpm_file_to_image(\
-			ti->tx->mlx, "./srcs/texture/door.xpm", &xpm_width, &xpm_height);
-	ti->tx->tex->texture_addr[2] = (int *) mlx_get_data_addr(\
-			ti->tx->tex->texture_ptr[2], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
-	ti->tx->tex->texture_ptr[3] = mlx_xpm_file_to_image(\
-			ti->tx->mlx, "./srcs/texture/door_a.xpm", &xpm_width, &xpm_height);
-	ti->tx->tex->texture_addr[3] = (int *) mlx_get_data_addr(\
-			ti->tx->tex->texture_ptr[3], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
-	ti->tx->tex->texture_ptr[4] = mlx_xpm_file_to_image(\
-			ti->tx->mlx, "./srcs/texture/door_b.xpm", &xpm_width, &xpm_height);
-	ti->tx->tex->texture_addr[4] = (int *) mlx_get_data_addr(\
-			ti->tx->tex->texture_ptr[4], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
-	ti->tx->tex->texture_ptr[5] = mlx_xpm_file_to_image(\
-			ti->tx->mlx, "./srcs/texture/door_c.xpm", &xpm_width, &xpm_height);
-	ti->tx->tex->texture_addr[5] = (int *) mlx_get_data_addr(\
-			ti->tx->tex->texture_ptr[5], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
 }
 
 void	init_texture(t_info *ti)
@@ -54,9 +31,11 @@ void	init_texture(t_info *ti)
 	ti->tx->tex->texture_ptr[0] = NULL;
 	ti->tx->tex->texture_addr[0] = NULL;
 	ti->tx->tex->texture_ptr[1] = mlx_xpm_file_to_image(\
-			ti->tx->mlx, "./srcs/texture/greenlight.xpm", &xpm_width, &xpm_height);
+			ti->tx->mlx, "./srcs/texture/greenlight.xpm", \
+			&xpm_width, &xpm_height);
 	ti->tx->tex->texture_addr[1] = (int *) mlx_get_data_addr(\
-			ti->tx->tex->texture_ptr[1], &temp.bits_per_pixel, &temp.line_length, &temp.endian);
+			ti->tx->tex->texture_ptr[1], \
+			&temp.bits_per_pixel, &temp.line_length, &temp.endian);
 	init_doors(ti);
 }
 
@@ -83,22 +62,13 @@ void	init_raycasting(t_info *ti)
 
 	tx = malloc (sizeof(t_mlx));
 	tmg = malloc (sizeof(t_img));
-
 	tx->mlx = mlx_init();
-	tx->mlx_win = mlx_new_window(tx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
+	tx->mlx_win = mlx_new_window(tx->mlx, \
+		SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	tmg->img = mlx_new_image(tx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	tmg->addr = mlx_get_data_addr(tmg->img, &tmg->bits_per_pixel, &tmg->line_length, &tmg->endian);
+	tmg->addr = mlx_get_data_addr(tmg->img, \
+		&tmg->bits_per_pixel, &tmg->line_length, &tmg->endian);
 	tx->img = tmg;
 	ti->tx = tx;
-	//printf("%d %d\n", ti->arr_height, ti->arr_width);
-	//for (int i = 0; i < ti->arr_height; i++)
-	//{
-	//	for (int j = 0; j < ti->arr_width; j++)
-	//	{
-	//		printf("%d", ti->map[i][j]);
-	//	}
-	//	printf("\n");
-	//}
 	init_xpm(ti);
-	mlx_loop(tx->mlx);
 }

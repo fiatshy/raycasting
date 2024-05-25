@@ -19,6 +19,37 @@
 # define	SCREEN_HEIGHT			480
 # define	NUMBER_OF_SPRITES		2
 
+#define U_DIV 1
+#define V_DIV 1
+#define V_MOVE 0.0
+
+struct s_pair {
+    double first;
+    int second;
+};
+
+typedef struct s_calc_sprite
+{
+	double	sprite_x;
+	double	sprite_y;
+	double	inv_det;
+	double	transform_x;
+	double 	transform_y;
+	int sprite_screen_x;
+	int v_move_screen;
+	int	h;
+	int sprite_height;
+	int draw_start_y;
+	int draw_end_y;
+	int sprite_width;
+	int draw_start_x;
+	int draw_end_x;
+	int tex_x;
+	int d;
+	int tex_y;
+	int color;
+}				t_calc_sprite;
+
 typedef struct s_prite
 {
 	double 	x;
@@ -33,7 +64,9 @@ typedef struct s_texture
 	void	**texture_ptr;
 	int		**texture_addr;
 	t_prite	sprite[NUMBER_OF_SPRITES];
-	
+	int		sprite_order[NUMBER_OF_SPRITES];
+	double	sprite_distance[NUMBER_OF_SPRITES];
+	double	dist_buffer[SCREEN_WIDTH];
 }			t_texture;
 
 typedef struct s_view
@@ -169,13 +202,52 @@ void	free_split(char **split);
 
 /* init_texture */
 void	init_walls(t_info *ti);
-void	init_doors(t_info *ti);
 void	init_texture(t_info *ti);
 void	init_xpm(t_info *ti);
 void	init_raycasting(t_info *ti);
 
+/* init_doors */
+void	init_doors(t_info *ti);
+void	init_doors_nested(t_info *ti);
+
 /* init_config */
 void	init_config(t_info *ti);
 void	init_mlx_config(t_info *ti);
+
+/* rdeer_util */
+double	abs_double(double x);
+
+/* render_wall */
+void	caclulate_distance_prepare(t_info *ti, t_distance *td, int x);
+void	calculate_initial_distance(t_info *ti, t_distance *td);
+void	calculate_distance_hit(t_info *ti, t_distance *td, int x);
+void	calculate_draw_value(t_info *ti, t_wall *tw, t_distance *td);
+void	draw_texture(t_info *ti, t_wall *tw, t_distance *td, int x);
+
+/* render_sprite_utils */
+void	sort_sprites_nested_b(int *order, double *dist, \
+		int amount, struct s_pair *sprites);
+void	sort_sprites_nested(int *order, double *dist, \
+		int amount, struct s_pair *sprites);
+void	sort_sprites(int *order, double *dist, int amount);
+void	order_by_distance(t_info *ti);
+
+/* render_sprite_calc */
+void	calc_sprite_transform(t_calc_sprite *cs, t_info *ti, int i);
+void	calc_sprite_y(t_calc_sprite *cs);
+void	calc_sprite_x(t_calc_sprite *cs);
+void	transform_sprite(t_info *ti);
+void	calculate_distance(t_info *ti);
+
+/* render_sprite_draw */
+void	draw_sprite_inner(t_calc_sprite *cs, t_info *ti, int x);
+void	draw_sprite(t_calc_sprite *cs, t_info *ti);
+
+
+/* render_general */
+void	put_pixel(t_img *img, int x, int y, int color);
+void	fill_background(t_info *ti);
+void	fill_ceiling(t_info *ti);
+int		render_frame(void *data);
 
 #endif

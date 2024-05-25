@@ -505,66 +505,66 @@ void	render_frame(void *data)
 	//	}
 	//}
 
-	//for (int i=0; i < numSprites; i++)
-	//{
-	//tx->spriteOrder[i] = i;
-	//tx->spriteDistance[i] = ((tx->pos_arr[0] - tx->sprite[i].x) * (tx->pos_arr[0] - tx->sprite[i].x) + (tx->pos_arr[1] - tx->sprite[i].y) * (tx->pos_arr[1] - tx->sprite[i].y));
-	//}
+	for (int i=0; i < numSprites; i++)
+	{
+	tx->spriteOrder[i] = i;
+	tx->spriteDistance[i] = ((tx->pos_arr[0] - tx->sprite[i].x) * (tx->pos_arr[0] - tx->sprite[i].x) + (tx->pos_arr[1] - tx->sprite[i].y) * (tx->pos_arr[1] - tx->sprite[i].y));
+	}
 
-	//sortSprites(tx->spriteOrder, tx->spriteDistance, numSprites);
+	sortSprites(tx->spriteOrder, tx->spriteDistance, numSprites);
 
-	//for (int i = 0; i < numSprites; i++)
-	//{
-	//double	spriteX = tx->sprite[tx->spriteOrder[i]].x - tx->pos_arr[0];
-	//double	spriteY = tx->sprite[tx->spriteOrder[i]].y - tx->pos_arr[1];
-	//double	invDet = 1.0 / (tx->plane[0] * tx->dir[1] - tx->dir[0] * tx->plane[1]);
-	//double	transformX = invDet * (tx->dir[1] * spriteX - tx->dir[0] * spriteY);
-	//double 	transformY = invDet * (-tx->plane[1] * spriteX + tx->plane[0] * spriteY);
+	for (int i = 0; i < numSprites; i++)
+	{
+	double	spriteX = tx->sprite[tx->spriteOrder[i]].x - tx->pos_arr[0];
+	double	spriteY = tx->sprite[tx->spriteOrder[i]].y - tx->pos_arr[1];
+	double	invDet = 1.0 / (tx->plane[0] * tx->dir[1] - tx->dir[0] * tx->plane[1]);
+	double	transformX = invDet * (tx->dir[1] * spriteX - tx->dir[0] * spriteY);
+	double 	transformY = invDet * (-tx->plane[1] * spriteX + tx->plane[0] * spriteY);
 
-	//int spriteScreenX = (int)((w / 2) * (1 + transformX / transformY));
-	////parameters for scaling and moving the sprites
-	//#define uDiv 1
-	//#define vDiv 1
-	//#define vMove 0.0
-	//int vMoveScreen = (int)(vMove / transformY);
+	int spriteScreenX = (int)((w / 2) * (1 + transformX / transformY));
+	//parameters for scaling and moving the sprites
+	#define uDiv 1
+	#define vDiv 1
+	#define vMove 0.0
+	int vMoveScreen = (int)(vMove / transformY);
 
-	////calculate height of the sprite on screen
-	//int	h = screenHeight;
-	//int spriteHeight = abs((int)(h / (transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
-	////calculate lowest and highest pixel to fill in current stripe
-	//int drawStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
-	//if(drawStartY < 0) drawStartY = 0;
-	//int drawEndY = spriteHeight / 2 + h / 2 + vMoveScreen;
-	//if(drawEndY >= h) drawEndY = h - 1;
+	//calculate height of the sprite on screen
+	int	h = screenHeight;
+	int spriteHeight = abs((int)(h / (transformY))) / vDiv; //using "transformY" instead of the real distance prevents fisheye
+	//calculate lowest and highest pixel to fill in current stripe
+	int drawStartY = -spriteHeight / 2 + h / 2 + vMoveScreen;
+	if(drawStartY < 0) drawStartY = 0;
+	int drawEndY = spriteHeight / 2 + h / 2 + vMoveScreen;
+	if(drawEndY >= h) drawEndY = h - 1;
 
-	////calculate width of the sprite
-	//int spriteWidth = abs((int) (h / (transformY))) / uDiv; // same as height of sprite, given that it's square
-	//int drawStartX = -spriteWidth / 2 + spriteScreenX;
-	//if(drawStartX < 0) drawStartX = 0;
-	//int drawEndX = spriteWidth / 2 + spriteScreenX;
-	//if(drawEndX > w) drawEndX = w;
+	//calculate width of the sprite
+	int spriteWidth = abs((int) (h / (transformY))) / uDiv; // same as height of sprite, given that it's square
+	int drawStartX = -spriteWidth / 2 + spriteScreenX;
+	if(drawStartX < 0) drawStartX = 0;
+	int drawEndX = spriteWidth / 2 + spriteScreenX;
+	if(drawEndX > w) drawEndX = w;
 
-	////loop through every vertical stripe of the sprite on screen
-	//for(int stripe = drawStartX; stripe < drawEndX; stripe++)
-	//{
-	//	int texX = (int)((stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth);
-	//	//the conditions in the if are:
-	//	//1) it's in front of camera plane so you don't see things behind you
-	//	//2) ZBuffer, with perpendicular distance
-	//	if(transformY > 0 && transformY < tx->ZBuffer[stripe])
-	//	{
-	//		for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
-	//		{
-	//			int d = (y - vMoveScreen) - h * 1/2 + spriteHeight * 1/2; //256 and 128 factors to avoid floats
-	//			int texY = ((d * texHeight) / spriteHeight);
-	//			int color = tx->light[texWidth * texY + texX]; //get current color from the texture
-	//			if((color & 0x00FFFFFF) != 0) 
-	//				put_pixel(tx->img, stripe, y, color); //paint pixel if it isn't black, black is the invisible color
-	//		}
-	//	}
-	//}
+	//loop through every vertical stripe of the sprite on screen
+	for(int stripe = drawStartX; stripe < drawEndX; stripe++)
+	{
+		int texX = (int)((stripe - (-spriteWidth / 2 + spriteScreenX)) * texWidth / spriteWidth);
+		//the conditions in the if are:
+		//1) it's in front of camera plane so you don't see things behind you
+		//2) ZBuffer, with perpendicular distance
+		if(transformY > 0 && transformY < tx->ZBuffer[stripe])
+		{
+			for(int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+			{
+				int d = (y - vMoveScreen) - h * 1/2 + spriteHeight * 1/2; //256 and 128 factors to avoid floats
+				int texY = ((d * texHeight) / spriteHeight);
+				int color = tx->light[texWidth * texY + texX]; //get current color from the texture
+				if((color & 0x00FFFFFF) != 0) 
+					put_pixel(tx->img, stripe, y, color); //paint pixel if it isn't black, black is the invisible color
+			}
+		}
+	}
 
-	//}
+	}
 
 	fill_minimap(tx);
 	fill_obstacle(tx);

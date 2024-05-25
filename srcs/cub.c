@@ -43,7 +43,6 @@ void	free_all(t_info *ti)
 	free(ti->tx->tex->wall_ptr);
 	free(ti->tx->tex);
 	free(ti->tx);
-
 	i = 0;
 	while (i < ti->arr_height)
 	{
@@ -57,7 +56,7 @@ int	main(int ac, char **av)
 {
 	t_dir	td;
 	t_info	ti;
-	char	*mapfile = "/home/sunghyki/Downloads/cub/map.cub";
+	char	*mapfile = "./map.cub";
 
 	(void) ac;
 	(void) av;

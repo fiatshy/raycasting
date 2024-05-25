@@ -16,7 +16,8 @@ int	check_split_length(char **split_value)
 {
 	if (get_split_length(split_value) != 3)
 	{
-		printf("config error: 3 digit is allowed for floor and ceiling value\n");
+		printf("config error: 3 digit is allowed \
+				for floor and ceiling value\n");
 		free_split(split_value);
 		return (-1);
 	}

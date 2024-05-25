@@ -24,7 +24,15 @@ SRCS_HANDLE_MAP = handle_map/check_map_error.c \
 					handle_map/make_map.c \
 
 SRCS_HANDLE_TEXTURE = handle_texture/init_texture.c \
+						handle_texture/init_doors.c \
 						handle_texture/init_config.c \
+
+SRCS_RENDER = rendering/render_general.c \
+				rendering/render_sprite_calc.c \
+				rendering/render_sprite_draw.c \
+				rendering/render_sprite_util.c \
+				rendering/render_util.c \
+				rendering/render_wall.c \
 
 SRCS_INIT = init/init.c \
 
@@ -38,6 +46,7 @@ SRCS_LIST = $(SRCS_FILE) \
 			$(SRCS_HANDLE_TEXTURE) \
 			$(SRCS_INIT) \
 			$(SRCS_UTIL) \
+			$(SRCS_RENDER) \
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 
