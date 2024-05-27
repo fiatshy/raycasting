@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_general.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sunghyki <sunghyki@student.42gyeongsa      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/27 13:27:43 by sunghyki          #+#    #+#             */
+/*   Updated: 2024/05/27 13:27:44 by sunghyki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 void	fill_background(t_info *ti)
@@ -52,6 +64,10 @@ int	render_frame(void *data)
 	fill_background(ti);
 	fill_ceiling(ti);
 	calculate_distance(ti);
+	fill_minimap(ti);
+	fill_minimap_wall(ti);
+	put_pixel(ti->tx->img, ti->tv->arr_pos[0] * 32, \
+			ti->tv->arr_pos[1] * 24, 0x00FF0000);
 	mlx_put_image_to_window(ti->tx->mlx, ti->tx->mlx_win, \
 		ti->tx->img->img, 0, 0);
 	return (0);

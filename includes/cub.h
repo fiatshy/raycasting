@@ -23,6 +23,14 @@
 #define V_DIV 1
 #define V_MOVE 0.0
 
+typedef struct s_mini 
+{
+	int	startx;
+	int	endx;
+	int	starty;
+	int	endy;
+}				t_mini;
+
 struct s_pair {
     double first;
     int second;
@@ -249,5 +257,21 @@ void	put_pixel(t_img *img, int x, int y, int color);
 void	fill_background(t_info *ti);
 void	fill_ceiling(t_info *ti);
 int		render_frame(void *data);
+
+/* direction */
+void	key_right(t_info *ti);
+void	key_left(t_info *ti);
+void	key_down(t_info *ti);
+void	key_up(t_info *ti);
+
+/* arrow */
+void	key_right_arrow(t_info *ti);
+void	key_left_arrows(t_info *ti);
+
+void	free_all(t_info *ti);
+
+void	fill_minimap_wall(t_info *ti);
+void	fill_minimap(t_info *ti);
+void	fill_wall(t_info *ti, t_mini tm);
 
 #endif

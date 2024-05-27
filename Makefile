@@ -33,6 +33,10 @@ SRCS_RENDER = rendering/render_general.c \
 				rendering/render_sprite_util.c \
 				rendering/render_util.c \
 				rendering/render_wall.c \
+				rendering/render_minimap.c \
+
+SRCS_KEYCONTROL = keycontrol/arrow.c \
+					keycontrol/direction.c \
 
 SRCS_INIT = init/init.c \
 
@@ -47,6 +51,7 @@ SRCS_LIST = $(SRCS_FILE) \
 			$(SRCS_INIT) \
 			$(SRCS_UTIL) \
 			$(SRCS_RENDER) \
+			$(SRCS_KEYCONTROL) \
 
 SRCS = $(addprefix $(SRCS_DIR), $(SRCS_LIST))
 

@@ -1,27 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_config.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sunghyki <sunghyki@student.42gyeongsa      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/27 13:38:00 by sunghyki          #+#    #+#             */
+/*   Updated: 2024/05/27 13:38:02 by sunghyki         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub.h"
 
 int	control_keys(int key, void *data)
 {
 	t_info	*ti;
-	double	old_dir_x;
-	double	rot_speed;
-	double	old_plane_x;
 
 	ti = data;
-	if (key == LEFT)
-	{
-		old_dir_x = ti->tv->dir[0];
-		rot_speed = 0.25;
-		ti->tv->dir[0] = ti->tv->dir[0] * cos(-rot_speed) \
-			- ti->tv->dir[1] * sin(-rot_speed);
-		ti->tv->dir[1] = old_dir_x * sin(-rot_speed) \
-			+ ti->tv->dir[1] * cos(-rot_speed);
-		old_plane_x = ti->tv->plane[0];
-		ti->tv->plane[0] = ti->tv->plane[0] * cos(-rot_speed) \
-			- ti->tv->plane[1] * sin(-rot_speed);
-		ti->tv->plane[1] = old_plane_x * sin(-rot_speed) \
-			+ ti->tv->plane[1] * cos(-rot_speed);
-	}
+	if (key == LEFT_ARROW)
+		key_left_arrows(ti);
+	else if (key == RIGHT_ARROW)
+		key_right_arrow(ti);
+	else if (key == UP)
+		key_up(ti);
+	else if (key == DOWN)
+		key_down(ti);
+	else if (key == LEFT)
+		key_left(ti);
+	else if (key == RIGHT)
+		key_right(ti);
 	return (0);
 }
 
@@ -45,8 +52,21 @@ void	init_config(t_info *ti)
 	ti->tv = tv;
 }
 
+int	close_window(void *data)
+{
+	t_info	*ti;
+
+	ti = data;
+	(void) ti;
+	printf("close\n");
+	free_all(ti);
+	exit(0);
+	return (0);
+}
+
 void	init_mlx_config(t_info *ti)
 {
+	mlx_hook(ti->tx->mlx_win, 17, 0, close_window, (void *) ti);
 	mlx_hook(ti->tx->mlx_win, 2, 1L << 0, control_keys, (void *)ti);
 	mlx_loop_hook(ti->tx->mlx, render_frame, (void *) ti);
 	mlx_loop(ti->tx->mlx);
