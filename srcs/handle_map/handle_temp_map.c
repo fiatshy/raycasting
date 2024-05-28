@@ -22,7 +22,7 @@ int	handle_map_value(char *temp, int i, int temp_map[100][100])
 		if ('0' <= *(temp + j) && *(temp + j) <= '9')
 			*(temp + j) -= '0';
 		else if (check_if_map_direction(*(temp + j)))
-			*(temp + j) -= 'A';
+			;
 		else if ((9 <= *(temp + j) && *(temp + j) <= 13) || *(temp + j) == 32)
 			*(temp + j) = -1;
 		else

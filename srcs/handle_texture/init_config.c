@@ -34,6 +34,63 @@ int	control_keys(int key, void *data)
 	return (0);
 }
 
+void	set_direction(char c, t_info *ti)
+{
+	if (c == 'N')
+	{
+		ti->tv->dir[0] = 0;
+		ti->tv->dir[1] = -1;
+		ti->tv->plane[0] = 0.66;
+		ti->tv->plane[1] = 0;
+	}
+	else if (c == 'S')
+	{
+		ti->tv->dir[0] = 0;
+		ti->tv->dir[1] = 1;
+		ti->tv->plane[0] = -0.66;
+		ti->tv->plane[1] = 0;
+	}
+	else if (c == 'E')
+	{
+		ti->tv->dir[0] = 1;
+		ti->tv->dir[1] = 0;
+		ti->tv->plane[0] = 0;
+		ti->tv->plane[1] = 0.66;
+	}
+	else if (c == 'W')
+	{
+		ti->tv->dir[0] = -1;
+		ti->tv->dir[1] = 0;
+		ti->tv->plane[0] = 0;
+		ti->tv->plane[1] = -0.66;
+	}
+}
+
+void	find_position(t_info *ti)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ti->arr_height)
+	{
+		j = 0;
+		while (j < ti->arr_width)
+		{
+			if (ti->map[i][j] == 'N' || ti->map[i][j] == 'S' || ti->map[i][j] == 'E' || ti->map[i][j] == 'W')
+			{
+				set_direction(ti->map[i][j], ti);
+				ti->map[i][j] = 0;
+				ti->tv->arr_pos[0] = j + 0.5;
+				ti->tv->arr_pos[1] = i + 0.5;
+				break;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	init_config(t_info *ti)
 {
 	t_view	*tv;
@@ -52,6 +109,7 @@ void	init_config(t_info *ti)
 	ti->tx->tex->sprite[1].y = 2.5;
 	ti->tx->tex->sprite[1].texture = 10;
 	ti->tv = tv;
+	find_position(ti);
 }
 
 int	close_window(void *data)

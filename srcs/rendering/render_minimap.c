@@ -37,17 +37,17 @@ void	fill_minimap_wall(t_info *ti)
 	t_mini	tm;
 
 	i = 0;
-	while (i < ti->arr_width)
+	while (i < ti->arr_height)
 	{
 		j = 0;
 		while (j < ti->arr_width)
 		{
-			if (ti->map[j][i] == 1)
+			if (ti->map[i][j] == 1)
 			{
-				tm.starty = i * (SCREEN_WIDTH / 4 / ti->arr_height);
-				tm.endy = (i + 1) * (SCREEN_WIDTH / 4 / ti->arr_height);
-				tm.startx = j * (SCREEN_HEIGHT / 4 / ti->arr_width);
-				tm.endx = (j + 1) * (SCREEN_HEIGHT / 4 / ti->arr_width);
+				tm.starty = j * (SCREEN_WIDTH / 4 / ti->arr_width);
+				tm.endy = (j + 1) * (SCREEN_WIDTH / 4 / ti->arr_width);
+				tm.startx = i * (SCREEN_HEIGHT / 4 / ti->arr_height);
+				tm.endx = (i + 1) * (SCREEN_HEIGHT / 4 / ti->arr_height);
 				fill_wall(ti, tm);
 			}
 			j++;
