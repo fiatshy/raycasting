@@ -35,9 +35,11 @@ SRCS_RENDER = rendering/render_general.c \
 				rendering/render_wall.c \
 				rendering/render_wall_utils.c \
 				rendering/render_minimap.c \
+				rendering/render_door.c \
 
 SRCS_KEYCONTROL = keycontrol/arrow.c \
 					keycontrol/direction.c \
+					keycontrol/special.c \
 
 SRCS_INIT = init/init.c \
 

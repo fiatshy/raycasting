@@ -3,6 +3,7 @@
 
 # include <stdio.h>
 # include <math.h>
+# include <unistd.h>
 # include "mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
@@ -13,6 +14,7 @@
 # define	RIGHT					100
 # define	LEFT_ARROW				65361
 # define	RIGHT_ARROW				65363
+# define	SPACE					32
 # define	TEXTURE_HEIGHT			64
 # define	TEXTURE_WIDTH			64
 # define	SCREEN_WIDTH			640
@@ -75,6 +77,7 @@ typedef struct s_texture
 	int		sprite_order[NUMBER_OF_SPRITES];
 	double	sprite_distance[NUMBER_OF_SPRITES];
 	double	dist_buffer[SCREEN_WIDTH];
+	int		count;
 }			t_texture;
 
 typedef struct s_view
@@ -233,7 +236,7 @@ void	calculate_draw_value(t_info *ti, t_wall *tw, t_distance *td);
 void	draw_texture(t_info *ti, t_wall *tw, t_distance *td, int x);
 
 /* render waill utils */
-void	select_wall_color(t_wall *tw, t_info *ti, t_distance *td);
+void	select_wall_color(t_wall *tw, t_info *ti, t_distance *td, int value);
 
 /* render_sprite_utils */
 void	sort_sprites_nested_b(int *order, double *dist, \
@@ -270,6 +273,13 @@ void	key_up(t_info *ti);
 /* arrow */
 void	key_right_arrow(t_info *ti);
 void	key_left_arrows(t_info *ti);
+
+/* special */
+void    key_space(t_info *ti);
+
+/* render door */
+void	handle_door(t_info *ti, t_distance *td);
+void	calculate_distance_hit_test(t_info *ti, t_distance *td, int x);
 
 void	free_all(t_info *ti);
 

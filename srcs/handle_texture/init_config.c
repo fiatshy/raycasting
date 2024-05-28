@@ -29,6 +29,8 @@ int	control_keys(int key, void *data)
 		key_left(ti);
 	else if (key == RIGHT)
 		key_right(ti);
+	else if (key == SPACE)
+		key_space(ti);
 	return (0);
 }
 

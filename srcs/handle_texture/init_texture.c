@@ -61,6 +61,7 @@ void	init_xpm(t_info *ti)
 	ti->tx->tex->wall_addr = malloc (sizeof(int *) * 4);
 	ti->tx->tex->texture_ptr = malloc (sizeof(void *) * 6);
 	ti->tx->tex->texture_addr = malloc (sizeof(int *) * 6);
+	ti->tx->tex->count = 0;
 	init_walls(ti);
 	init_texture(ti);
 	init_config(ti);

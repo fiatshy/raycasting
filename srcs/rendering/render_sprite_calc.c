@@ -87,6 +87,11 @@ void	calculate_distance(t_info *ti)
 		calculate_distance_hit(ti, &td, x);
 		calculate_draw_value(ti, &tw, &td);
 		draw_texture(ti, &tw, &td, x);
+		caclulate_distance_prepare(ti, &td, x);
+		calculate_initial_distance(ti, &td);
+		calculate_distance_hit_test(ti, &td, x);
+		calculate_draw_value(ti, &tw, &td);
+		draw_texture(ti, &tw, &td, x);
 		x++;
 	}
 	order_by_distance(ti);
