@@ -232,6 +232,9 @@ void	calculate_distance_hit(t_info *ti, t_distance *td, int x);
 void	calculate_draw_value(t_info *ti, t_wall *tw, t_distance *td);
 void	draw_texture(t_info *ti, t_wall *tw, t_distance *td, int x);
 
+/* render waill utils */
+void	select_wall_color(t_wall *tw, t_info *ti, t_distance *td);
+
 /* render_sprite_utils */
 void	sort_sprites_nested_b(int *order, double *dist, \
 		int amount, struct s_pair *sprites);

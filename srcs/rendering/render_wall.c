@@ -121,8 +121,7 @@ void	draw_texture(t_info *ti, t_wall *tw, t_distance *td, int x)
 	{
 		tw->tex_y = (int) tw->tex_pos & (TEXTURE_HEIGHT - 1);
 		tw->tex_pos += tw->step;
-		tw->color = ti->tx->tex->wall_addr[3][TEXTURE_HEIGHT \
-			* tw->tex_y + tw->tex_x];
+		select_wall_color(tw, ti, td);
 		if (td->side == 1)
 			tw->color = (tw->color >> 1) & 8355711;
 		put_pixel(ti->tx->img, x, y, tw->color);

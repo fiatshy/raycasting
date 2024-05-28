@@ -33,6 +33,7 @@ SRCS_RENDER = rendering/render_general.c \
 				rendering/render_sprite_util.c \
 				rendering/render_util.c \
 				rendering/render_wall.c \
+				rendering/render_wall_utils.c \
 				rendering/render_minimap.c \
 
 SRCS_KEYCONTROL = keycontrol/arrow.c \
