@@ -66,8 +66,10 @@ int	render_frame(void *data)
 	calculate_distance(ti);
 	fill_minimap(ti);
 	fill_minimap_wall(ti);
-	put_pixel(ti->tx->img, ti->tv->arr_pos[0] * (SCREEN_WIDTH / 4 / ti->arr_width), \
-			ti->tv->arr_pos[1] * (SCREEN_HEIGHT / 4 / ti->arr_height), 0x00FF0000);
+	put_pixel(ti->tx->img, ti->tv->arr_pos[0] \
+		* (SCREEN_WIDTH / 4 / ti->arr_width), \
+			ti->tv->arr_pos[1] * \
+			(SCREEN_HEIGHT / 4 / ti->arr_height), 0x00FF0000);
 	mlx_put_image_to_window(ti->tx->mlx, ti->tx->mlx_win, \
 		ti->tx->img->img, 0, 0);
 	return (0);

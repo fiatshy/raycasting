@@ -1,9 +1,14 @@
 {
-	"makefile.makefilePath": "/home/sunghyki/Downloads/cub",
+	"makefile.makefilePath": "/home/sunghyki/Downloads/raycasting",
 	"makefile.launchConfigurations": [
 		{
 			"cwd": "/home/sunghyki/Downloads/cub",
 			"binaryPath": "/home/sunghyki/Downloads/cub/cub3d",
+			"binaryArgs": []
+		},
+		{
+			"cwd": "/home/sunghyki/Downloads/raycasting",
+			"binaryPath": "/home/sunghyki/Downloads/raycasting/cub3d",
 			"binaryArgs": []
 		}
 	]

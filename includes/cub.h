@@ -19,7 +19,7 @@
 # define	TEXTURE_WIDTH			64
 # define	SCREEN_WIDTH			640
 # define	SCREEN_HEIGHT			480
-# define	NUMBER_OF_SPRITES		2
+# define	NUMBER_OF_SPRITES		5
 
 #define U_DIV 1
 #define V_DIV 1
@@ -280,6 +280,11 @@ void    key_space(t_info *ti);
 /* render door */
 void	handle_door(t_info *ti, t_distance *td);
 void	calculate_distance_hit_test(t_info *ti, t_distance *td, int x);
+
+/* init position */
+void	set_direction_nested(char c, t_info *ti);
+void	set_direction(char c, t_info *ti);
+void	find_position(t_info *ti);
 
 void	free_all(t_info *ti);
 

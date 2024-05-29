@@ -26,6 +26,7 @@ SRCS_HANDLE_MAP = handle_map/check_map_error.c \
 SRCS_HANDLE_TEXTURE = handle_texture/init_texture.c \
 						handle_texture/init_doors.c \
 						handle_texture/init_config.c \
+						handle_texture/init_position.c \
 
 SRCS_RENDER = rendering/render_general.c \
 				rendering/render_sprite_calc.c \

@@ -86,4 +86,6 @@ void	order_by_distance(t_info *ti)
 			(ti->tv->arr_pos[1] - ti->tx->tex->sprite[i].y));
 		i++;
 	}
+	sort_sprites(ti->tx->tex->sprite_order, \
+		ti->tx->tex->sprite_distance, NUMBER_OF_SPRITES);
 }
