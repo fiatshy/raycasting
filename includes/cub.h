@@ -7,6 +7,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
+# include <sys/time.h>
 
 # define	UP						119
 # define	DOWN					115
@@ -163,6 +164,10 @@ typedef struct s_info
 	t_view	*tv;
 	int		arr_width;
 	int		arr_height;
+	long	old_time;
+	long	time;
+	double	rot_speed;
+	double	move_speed;
 }				t_info;
 
 /* util_file_handling */

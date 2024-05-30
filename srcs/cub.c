@@ -52,6 +52,15 @@ void	free_all(t_info *ti)
 	free(ti->map);
 }
 
+void	set_ti_time(t_info *ti)
+{
+	struct timeval	temp;
+
+	gettimeofday(&temp, NULL);
+	ti->old_time = temp.tv_sec * 1000000 + temp.tv_usec;
+	ti->time = ti->old_time;
+}
+
 int	main(int ac, char **av)
 {
 	t_dir	td;
@@ -60,9 +69,9 @@ int	main(int ac, char **av)
 
 	(void) ac;
 	(void) av;
-	(void) ti;
 	init_tdir(&td);
 	ti.td = &td;
+	set_ti_time(&ti);
 	if (check_file(mapfile, &td, &ti) == -1)
 		return (0);
 	init_raycasting(&ti);

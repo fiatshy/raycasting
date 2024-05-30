@@ -56,6 +56,19 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void	calculate_fps(t_info *ti)
+{
+	struct timeval	temp;
+	double			fps;
+
+	gettimeofday(&temp, NULL);
+	ti->old_time = ti->time;
+	ti->time = temp.tv_sec * 1000000 + temp.tv_usec;
+	fps = 1000 / ((ti->time - ti->old_time) / 1000);
+	ti->move_speed = 10 / fps * 7.5;
+	ti->rot_speed = 10 / fps * 7.5;
+}
+
 int	render_frame(void *data)
 {
 	t_info	*ti;
@@ -72,5 +85,6 @@ int	render_frame(void *data)
 			(SCREEN_HEIGHT / 4 / ti->arr_height), 0x00FF0000);
 	mlx_put_image_to_window(ti->tx->mlx, ti->tx->mlx_win, \
 		ti->tx->img->img, 0, 0);
+	calculate_fps(ti);
 	return (0);
 }
